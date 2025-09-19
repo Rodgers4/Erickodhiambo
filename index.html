@@ -5,156 +5,231 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Erick Odhiambo</title>
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body, html { height: 100%; font-family: Arial, sans-serif; }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #0a0f0d, #1a1f1d);
+      color: white;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
 
-    /* Welcome Screen */
-    #welcome-screen {
-      background: url('https://images.unsplash.com/photo-1529429617124-95b109e86bb8?auto=format&fit=crop&w=1740&q=80') center/cover no-repeat;
-      height: 100vh; display: flex; justify-content: center; align-items: center;
-      flex-direction: column; color: white; text-align: center;
+    header {
+      margin-top: 20px;
+      font-size: 28px;
+      font-weight: bold;
+      animation: fadeInOut 4s ease-in-out infinite;
     }
-    .scroll-header {
-      font-size: 2rem; font-weight: bold; animation: slideInOut 5s infinite alternate;
-      background: linear-gradient(90deg, #00f2ff, #ff00f2);
-      -webkit-background-clip: text; color: transparent;
+
+    @keyframes fadeInOut {
+      0%, 100% { opacity: 0.2; }
+      50% { opacity: 1; }
     }
-    @keyframes slideInOut {
-      0% { transform: translateX(-100%); opacity: 0; }
-      50% { transform: translateX(0); opacity: 1; }
-      100% { transform: translateX(100%); opacity: 0; }
+
+    .profile-pic {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-top: 10px;
+      border: 3px solid cyan;
     }
+
+    .clock {
+      font-size: 20px;
+      margin: 5px 0;
+      color: cyan;
+    }
+
+    .section {
+      width: 90%;
+      max-width: 700px;
+      background: rgba(0, 0, 0, 0.5);
+      margin: 10px 0;
+      padding: 15px;
+      border-radius: 15px;
+      box-shadow: 0px 0px 10px rgba(0,255,255,0.3);
+      position: relative;
+      z-index: 1;
+    }
+
+    .btn-container {
+      margin: 10px 0;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+    }
+
     .btn {
-      margin: 10px; padding: 12px 24px; border: none; cursor: pointer;
-      border-radius: 25px; background: #00f2ff; color: #000;
-      font-weight: bold; font-size: 1rem; transition: 0.3s;
-    }
-    .btn:hover { background: #ff00f2; color: white; }
-    .powered { margin-top: 20px; font-size: 0.9rem; color: #ddd; }
-
-    /* Loading Popup */
-    #loading-popup {
-      position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-      display: flex; justify-content: center; align-items: center;
-      background: rgba(0,0,0,0.8); color: white; font-size: 1.5rem;
-      z-index: 999; opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
-    }
-    #loading-popup.show { opacity: 1; pointer-events: auto; }
-
-    /* Main Content */
-    #main-content {
-      display: none; min-height: 100vh;
-      background: url('https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1740&q=80') center/cover fixed no-repeat;
-      color: white; text-align: center; padding: 20px;
-    }
-    .main-header {
-      font-size: 2.5rem; margin: 20px 0;
-      animation: slideInOut 5s infinite alternate;
-      background: linear-gradient(90deg, #ff00f2, #00f2ff);
-      -webkit-background-clip: text; color: transparent;
+      padding: 8px 14px;
+      background: cyan;
+      border: none;
+      color: black;
+      font-weight: bold;
+      border-radius: 10px;
+      cursor: pointer;
+      text-decoration: none;
     }
 
-    /* Clock & Battery */
-    .info-bar {
-      margin: 10px 0; font-size: 1.2rem; display: flex;
-      justify-content: center; gap: 20px;
+    .btn:hover {
+      opacity: 0.8;
     }
 
-    /* Footer */
-    footer { margin-top: 30px; }
-    .socials a {
-      margin: 0 8px; text-decoration: none; font-size: 1.3rem;
-      color: white; transition: 0.3s;
+    .live-interface {
+      display: grid;
+      grid-template-columns: 1fr 2fr 1fr;
+      gap: 10px;
+      text-align: left;
+      position: relative;
+      overflow: hidden;
     }
-    .socials a:hover { color: #00f2ff; }
+
+    .box {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 10px;
+      border-radius: 10px;
+      min-height: 100px;
+      z-index: 2;
+      backdrop-filter: blur(3px);
+    }
+
+    footer {
+      margin-top: auto;
+      font-size: 12px;
+      padding: 10px;
+      opacity: 0.7;
+    }
+
+    /* Star Animation Background */
+    .stars {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: transparent;
+      overflow: hidden;
+      z-index: 0;
+    }
+
+    .star {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: white;
+      border-radius: 50%;
+      animation: moveStar 10s linear infinite;
+    }
+
+    @keyframes moveStar {
+      0% { transform: translate(0, 0) scale(1); opacity: 0.8; }
+      50% { transform: translate(40px, 20px) scale(1.2); opacity: 1; }
+      100% { transform: translate(0, 0) scale(1); opacity: 0.8; }
+    }
+
+    /* Popup styles */
+    .popup {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.85);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: cyan;
+      font-size: 22px;
+      font-weight: bold;
+      z-index: 1000;
+    }
   </style>
 </head>
 <body>
+  <!-- Popup -->
+  <div class="popup" id="loadingPopup">ROYTECH LOADING...</div>
 
-  <!-- Welcome Screen -->
-  <section id="welcome-screen">
-    <h1 class="scroll-header">ERICK ODHAMBO</h1>
-    <h2>WELCOME TO MY WEBSITE</h2>
-    <button class="btn" onclick="startSite()">GET STARTED</button>
-    <button class="btn" onclick="showMoreAbout()">MORE ABOUT ME</button>
-    <p class="powered">Powered by RoyTech ©2025</p>
-  </section>
+  <header>ERICK ODHIAMBO</header>
+  <img src="https://i.imgur.com/Y3jxpZk.jpeg" alt="Profile" class="profile-pic">
 
-  <!-- Loading Popup -->
-  <div id="loading-popup"><p>ROYTECH LOADING...</p></div>
+  <div class="clock" id="clock"></div>
+  <div class="section">
+    <h2>About Me</h2>
+    <p>Hi, I'm Erick Odhiambo — a creative developer passionate about tech, automation, and web development. I love building things that make life easier.</p>
+  </div>
 
-  <!-- Main Content -->
-  <main id="main-content">
-    <h1 class="main-header">ERICK ODHAMBO</h1>
-
-    <div class="info-bar">
-      <span id="clock">--:--:--</span>
-      <span id="battery">🔋 --%</span>
+  <div class="section">
+    <h2>Contact Me</h2>
+    <div class="btn-container">
+      <a href="https://wa.me/2547XXXXXXXX" class="btn">WhatsApp</a>
+      <a href="#" class="btn">Instagram</a>
+      <a href="#" class="btn">TikTok</a>
+      <a href="#" class="btn">Twitter (X)</a>
+      <a href="#" class="btn">Facebook</a>
+      <a href="#" class="btn">Gmail</a>
     </div>
+  </div>
 
-    <h2>BSc Agriculture & Human Ecology Extension</h2>
-    <p>Studying at Egerton University. Passionate about Agriculture, Human Development, and Technology. 
-    This website was built to showcase my journey and share my contacts.</p>
-
-    <button class="btn" onclick="openWhatsApp()">Contact Me on WhatsApp</button>
-
-    <footer>
-      <div class="socials">
-        <a href="https://wa.me/254796918765" target="_blank">WhatsApp</a>
-        <a href="#">Facebook</a>
-        <a href="#">Instagram</a>
-        <a href="#">Twitter</a>
-        <a href="#">LinkedIn</a>
+  <div class="section">
+    <h2>Live Interface</h2>
+    <!-- Animated stars -->
+    <div class="stars" id="stars"></div>
+    <div class="live-interface">
+      <div class="box">
+        <h4>Stories</h4>
+        <p>Story 1</p>
+        <p>Story 2</p>
+        <p>Story 3</p>
       </div>
-      <p>Powered by RoyTech ©2025</p>
-    </footer>
-  </main>
+      <div class="box">
+        <h4>Feed</h4>
+        <p>Sample Post: This is how your feed will look.</p>
+        <p>Another post in your feed preview.</p>
+      </div>
+      <div class="box">
+        <h4>Suggestions</h4>
+        <p>Friend Request: None</p>
+        <p>Suggested User 1</p>
+      </div>
+    </div>
+  </div>
+
+  <footer>POWERED BY ROYTECH ©2025</footer>
 
   <script>
-    // Loading Screen Logic
-    function startSite() {
-      document.getElementById("loading-popup").classList.add("show");
-      setTimeout(() => {
-        document.getElementById("loading-popup").classList.remove("show");
-        document.getElementById("welcome-screen").style.display = "none";
-        document.getElementById("main-content").style.display = "block";
-      }, 2000);
-    }
-
-    function openWhatsApp() {
-      document.getElementById("loading-popup").classList.add("show");
-      setTimeout(() => {
-        document.getElementById("loading-popup").classList.remove("show");
-        window.open("https://wa.me/254796918765", "_blank");
-      }, 2000);
-    }
-
-    function showMoreAbout() {
-      alert("Erick Odhiambo is an aspiring agricultural expert focused on improving rural livelihoods and promoting sustainable farming. Currently pursuing a degree in Agriculture and Human Ecology Extension at Egerton University.");
-    }
-
-    // Live Clock
+    // Clock
     function updateClock() {
       const now = new Date();
-      document.getElementById("clock").textContent =
-        now.toLocaleTimeString('en-GB', { hour12: false });
+      document.getElementById("clock").textContent = now.toLocaleTimeString();
     }
     setInterval(updateClock, 1000);
     updateClock();
 
-    // Battery Status
-    if (navigator.getBattery) {
-      navigator.getBattery().then(battery => {
-        function updateBattery() {
-          document.getElementById("battery").textContent = `🔋 ${Math.round(battery.level * 100)}%`;
-        }
-        updateBattery();
-        battery.addEventListener('levelchange', updateBattery);
-      });
-    } else {
-      document.getElementById("battery").textContent = "🔋 N/A";
+    // Popup for "loading"
+    window.onload = function() {
+      const popup = document.getElementById("loadingPopup");
+      popup.style.display = "flex";
+      setTimeout(() => {
+        popup.style.display = "none";
+      }, 2000);
+    };
+
+    // Generate Stars
+    const starsContainer = document.getElementById('stars');
+    for (let i = 0; i < 30; i++) {
+      const star = document.createElement('div');
+      star.className = 'star';
+      star.style.top = Math.random() * 100 + '%';
+      star.style.left = Math.random() * 100 + '%';
+      star.style.animationDelay = (Math.random() * 5) + 's';
+      starsContainer.appendChild(star);
     }
   </script>
-
 </body>
 </html>
