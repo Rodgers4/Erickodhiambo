@@ -159,15 +159,16 @@
   <img src="https://i.imgur.com/Y3jxpZk.jpeg" alt="Profile" class="profile-pic">
 
   <div class="clock" id="clock"></div>
+
   <div class="section">
     <h2>About Me</h2>
-    <p>Hi, I'm Erick Odhiambo — a creative developer passionate about tech, automation, and web development. I love building things that make life easier.</p>
+    <p>Hello, I’m Erick Odhiambo from Migori. Currently studying at Egerton University pursuing a degree in <b>BSc Agriculture and Human Ecology Extension</b>. Passionate about helping communities through sustainable farming practices and human development.</p>
   </div>
 
   <div class="section">
     <h2>Contact Me</h2>
     <div class="btn-container">
-      <a href="https://wa.me/2547XXXXXXXX" class="btn">WhatsApp</a>
+      <a href="https://wa.me/254796918765" class="btn" onclick="showPopup(event)">WhatsApp</a>
       <a href="#" class="btn">Instagram</a>
       <a href="#" class="btn">TikTok</a>
       <a href="#" class="btn">Twitter (X)</a>
@@ -183,19 +184,19 @@
     <div class="live-interface">
       <div class="box">
         <h4>Stories</h4>
-        <p>Story 1</p>
-        <p>Story 2</p>
-        <p>Story 3</p>
+        <p>🌱 Sustainable Farming Tips</p>
+        <p>🎓 University Moments</p>
+        <p>🌍 Community Projects</p>
       </div>
       <div class="box">
         <h4>Feed</h4>
-        <p>Sample Post: This is how your feed will look.</p>
-        <p>Another post in your feed preview.</p>
+        <p>📢 Just completed a project on soil fertility improvement in Migori.</p>
+        <p>💡 Sharing knowledge on human ecology with fellow students.</p>
       </div>
       <div class="box">
         <h4>Suggestions</h4>
-        <p>Friend Request: None</p>
-        <p>Suggested User 1</p>
+        <p>🔗 Network with fellow agriculturists</p>
+        <p>📖 Explore human ecology research papers</p>
       </div>
     </div>
   </div>
@@ -211,16 +212,25 @@
     setInterval(updateClock, 1000);
     updateClock();
 
-    // Popup for "loading"
+    // Loading popup on page load
     window.onload = function() {
+      const popup = document.getElementById("loadingPopup");
+      popup.style.display = "flex";
+      setTimeout(() => popup.style.display = "none", 2000);
+    };
+
+    // Show popup before opening WhatsApp
+    function showPopup(event) {
+      event.preventDefault();
       const popup = document.getElementById("loadingPopup");
       popup.style.display = "flex";
       setTimeout(() => {
         popup.style.display = "none";
+        window.open("https://wa.me/254796918765", "_blank");
       }, 2000);
-    };
+    }
 
-    // Generate Stars
+    // Generate stars
     const starsContainer = document.getElementById('stars');
     for (let i = 0; i < 30; i++) {
       const star = document.createElement('div');
