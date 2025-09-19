@@ -3,236 +3,158 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Erick Omondi | Portfolio</title>
+  <title>Erick Odhiambo</title>
   <style>
-    body, html {
-      margin: 0;
-      padding: 0;
-      font-family: 'Orbitron', sans-serif;
-      background: #0a0a0a;
-      color: #fff;
-      overflow-x: hidden;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body, html { height: 100%; font-family: Arial, sans-serif; }
 
-    /* WELCOME SCREEN */
+    /* Welcome Screen */
     #welcome-screen {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: url('https://images.unsplash.com/photo-1486308510493-aa64833634ef?ixlib=rb-4.0.3&auto=format&fit=crop&w=1500&q=80') center/cover no-repeat;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      z-index: 9999;
+      background: url('https://images.unsplash.com/photo-1529429617124-95b109e86bb8?auto=format&fit=crop&w=1740&q=80') center/cover no-repeat;
+      height: 100vh; display: flex; justify-content: center; align-items: center;
+      flex-direction: column; color: white; text-align: center;
     }
-
-    #welcome-screen h1 {
-      font-size: 2.5rem;
-      text-shadow: 0px 0px 15px #00fff7;
+    .scroll-header {
+      font-size: 2rem; font-weight: bold; animation: slideInOut 5s infinite alternate;
+      background: linear-gradient(90deg, #00f2ff, #ff00f2);
+      -webkit-background-clip: text; color: transparent;
     }
-
-    .start-btn {
-      margin-top: 20px;
-      padding: 12px 25px;
-      font-size: 1.2rem;
-      border: none;
-      border-radius: 8px;
-      background: #00fff7;
-      color: #000;
-      cursor: pointer;
-      transition: transform 0.3s ease;
+    @keyframes slideInOut {
+      0% { transform: translateX(-100%); opacity: 0; }
+      50% { transform: translateX(0); opacity: 1; }
+      100% { transform: translateX(100%); opacity: 0; }
     }
-
-    .start-btn:hover {
-      transform: scale(1.1);
+    .btn {
+      margin: 10px; padding: 12px 24px; border: none; cursor: pointer;
+      border-radius: 25px; background: #00f2ff; color: #000;
+      font-weight: bold; font-size: 1rem; transition: 0.3s;
     }
+    .btn:hover { background: #ff00f2; color: white; }
+    .powered { margin-top: 20px; font-size: 0.9rem; color: #ddd; }
 
-    .welcome-footer {
-      position: absolute;
-      bottom: 15px;
-      font-size: 0.9rem;
-      color: #00fff7;
-      text-shadow: 0px 0px 10px #00fff7;
+    /* Loading Popup */
+    #loading-popup {
+      position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+      display: flex; justify-content: center; align-items: center;
+      background: rgba(0,0,0,0.8); color: white; font-size: 1.5rem;
+      z-index: 999; opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
     }
+    #loading-popup.show { opacity: 1; pointer-events: auto; }
 
-    /* LOADING SCREEN */
-    #loading-screen {
-      display: none;
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: #000;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 9998;
-      font-size: 2rem;
-      color: #00fff7;
-      text-shadow: 0px 0px 15px #00fff7;
-    }
-
-    /* MAIN CONTENT */
+    /* Main Content */
     #main-content {
-      display: none;
-      animation: fadeIn 1s ease forwards;
+      display: none; min-height: 100vh;
+      background: url('https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1740&q=80') center/cover fixed no-repeat;
+      color: white; text-align: center; padding: 20px;
+    }
+    .main-header {
+      font-size: 2.5rem; margin: 20px 0;
+      animation: slideInOut 5s infinite alternate;
+      background: linear-gradient(90deg, #ff00f2, #00f2ff);
+      -webkit-background-clip: text; color: transparent;
     }
 
-    header {
-      position: sticky;
-      top: 0;
-      background: rgba(0, 0, 0, 0.85);
-      padding: 15px;
-      text-align: center;
-      font-size: 1.8rem;
-      font-weight: bold;
-      text-transform: uppercase;
-      text-shadow: 0px 0px 15px #00fff7;
-      letter-spacing: 2px;
-      backdrop-filter: blur(6px);
-      z-index: 1000;
+    /* Clock & Battery */
+    .info-bar {
+      margin: 10px 0; font-size: 1.2rem; display: flex;
+      justify-content: center; gap: 20px;
     }
 
-    section {
-      padding: 40px 20px;
-      text-align: center;
-      animation: fadeInUp 1s ease forwards;
+    /* Footer */
+    footer { margin-top: 30px; }
+    .socials a {
+      margin: 0 8px; text-decoration: none; font-size: 1.3rem;
+      color: white; transition: 0.3s;
     }
-
-    /* MORE ABOUT ME POPUP */
-    #more-popup {
-      display: none;
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(0, 0, 0, 0.9);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      padding: 30px;
-      z-index: 10000;
-      opacity: 0;
-      transform: scale(0.8);
-      transition: opacity 0.3s ease, transform 0.3s ease;
-    }
-
-    #more-popup.active {
-      display: flex;
-      opacity: 1;
-      transform: scale(1);
-    }
-
-    .close-btn {
-      position: absolute;
-      top: 15px;
-      right: 20px;
-      font-size: 2rem;
-      color: #fff;
-      cursor: pointer;
-    }
-
-    footer {
-      background: #000;
-      text-align: center;
-      padding: 20px;
-      font-size: 0.9rem;
-    }
-
-    .social-icons a {
-      margin: 0 8px;
-      color: #00fff7;
-      text-decoration: none;
-      font-size: 1.2rem;
-      transition: color 0.3s ease;
-    }
-
-    .social-icons a:hover {
-      color: #ff0080;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+    .socials a:hover { color: #00f2ff; }
   </style>
 </head>
 <body>
 
-  <!-- WELCOME SCREEN -->
-  <div id="welcome-screen">
-    <h1>WELCOME TO MY WEBSITE</h1>
-    <button class="start-btn" onclick="startSite()">GET STARTED</button>
-    <div class="welcome-footer">Powered by RoyTech ©2025</div>
-  </div>
+  <!-- Welcome Screen -->
+  <section id="welcome-screen">
+    <h1 class="scroll-header">ERICK ODHAMBO</h1>
+    <h2>WELCOME TO MY WEBSITE</h2>
+    <button class="btn" onclick="startSite()">GET STARTED</button>
+    <button class="btn" onclick="showMoreAbout()">MORE ABOUT ME</button>
+    <p class="powered">Powered by RoyTech ©2025</p>
+  </section>
 
-  <!-- LOADING SCREEN -->
-  <div id="loading-screen">ROYTECH LOADING...</div>
+  <!-- Loading Popup -->
+  <div id="loading-popup"><p>ROYTECH LOADING...</p></div>
 
-  <!-- MAIN CONTENT -->
-  <div id="main-content">
-    <header>Erick Omondi Portfolio</header>
+  <!-- Main Content -->
+  <main id="main-content">
+    <h1 class="main-header">ERICK ODHAMBO</h1>
 
-    <section>
-      <p>Hello, I’m Erick Omondi from Migori, currently studying BSc Agriculture and Human Ecology Extension at Egerton University. This portfolio showcases my journey, goals, and achievements.</p>
-      <button class="start-btn" onclick="openMore()">More About Me</button>
-      <br><br>
-      <button class="start-btn" onclick="openWhatsApp()">Contact Me on WhatsApp</button>
-    </section>
+    <div class="info-bar">
+      <span id="clock">--:--:--</span>
+      <span id="battery">🔋 --%</span>
+    </div>
+
+    <h2>BSc Agriculture & Human Ecology Extension</h2>
+    <p>Studying at Egerton University. Passionate about Agriculture, Human Development, and Technology. 
+    This website was built to showcase my journey and share my contacts.</p>
+
+    <button class="btn" onclick="openWhatsApp()">Contact Me on WhatsApp</button>
 
     <footer>
-      <div class="social-icons">
-        <a href="#" title="Facebook">📘</a>
-        <a href="#" title="Instagram">📸</a>
-        <a href="#" title="Twitter">🐦</a>
-        <a href="#" title="LinkedIn">💼</a>
-        <a href="#" title="YouTube">▶️</a>
-        <a href="https://wa.me/254796918765" target="_blank" title="WhatsApp">💬</a>
+      <div class="socials">
+        <a href="https://wa.me/254796918765" target="_blank">WhatsApp</a>
+        <a href="#">Facebook</a>
+        <a href="#">Instagram</a>
+        <a href="#">Twitter</a>
+        <a href="#">LinkedIn</a>
       </div>
-      Powered by RoyTech ©2025
+      <p>Powered by RoyTech ©2025</p>
     </footer>
-  </div>
-
-  <!-- MORE ABOUT ME POPUP -->
-  <div id="more-popup">
-    <span class="close-btn" onclick="closeMore()">×</span>
-    <div>
-      <h2>More About Me</h2>
-      <p>I’m passionate about improving agricultural practices and supporting rural communities through education and innovation. My goal is to make agriculture sustainable, modern, and accessible to everyone.</p>
-    </div>
-  </div>
+  </main>
 
   <script>
+    // Loading Screen Logic
     function startSite() {
-      document.getElementById('welcome-screen').style.display = 'none';
-      document.getElementById('loading-screen').style.display = 'flex';
+      document.getElementById("loading-popup").classList.add("show");
       setTimeout(() => {
-        document.getElementById('loading-screen').style.display = 'none';
-        document.getElementById('main-content').style.display = 'block';
+        document.getElementById("loading-popup").classList.remove("show");
+        document.getElementById("welcome-screen").style.display = "none";
+        document.getElementById("main-content").style.display = "block";
       }, 2000);
-    }
-
-    function openMore() {
-      document.getElementById('more-popup').classList.add('active');
-    }
-
-    function closeMore() {
-      document.getElementById('more-popup').classList.remove('active');
     }
 
     function openWhatsApp() {
-      document.getElementById('loading-screen').style.display = 'flex';
+      document.getElementById("loading-popup").classList.add("show");
       setTimeout(() => {
-        document.getElementById('loading-screen').style.display = 'none';
-        window.open('https://wa.me/254796918765', '_blank');
+        document.getElementById("loading-popup").classList.remove("show");
+        window.open("https://wa.me/254796918765", "_blank");
       }, 2000);
     }
+
+    function showMoreAbout() {
+      alert("Erick Odhiambo is an aspiring agricultural expert focused on improving rural livelihoods and promoting sustainable farming. Currently pursuing a degree in Agriculture and Human Ecology Extension at Egerton University.");
+    }
+
+    // Live Clock
+    function updateClock() {
+      const now = new Date();
+      document.getElementById("clock").textContent =
+        now.toLocaleTimeString('en-GB', { hour12: false });
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    // Battery Status
+    if (navigator.getBattery) {
+      navigator.getBattery().then(battery => {
+        function updateBattery() {
+          document.getElementById("battery").textContent = `🔋 ${Math.round(battery.level * 100)}%`;
+        }
+        updateBattery();
+        battery.addEventListener('levelchange', updateBattery);
+      });
+    } else {
+      document.getElementById("battery").textContent = "🔋 N/A";
+    }
   </script>
+
 </body>
 </html>
