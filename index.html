@@ -3,272 +3,135 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Erick Odhiambo</title>
+  <title>Erick Odhiambo | Personal Website</title>
   <style>
     body, html {
       margin: 0;
       padding: 0;
-      font-family: monospace;
+      font-family: "Orbitron", sans-serif;
       background: url('https://i.imgur.com/m8hS4jA.jpeg') no-repeat center center/cover;
-      background-attachment: fixed;
       color: white;
       text-align: center;
+      height: 100%;
     }
 
-    /* Welcome screen */
-    #welcome-screen {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(0,0,0,0.8);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-    }
-
-    #welcome-screen h1 {
-      font-size: 30px;
-      margin-bottom: 10px;
-      font-weight: bold;
-      letter-spacing: 2px;
-    }
-
-    #welcome-screen h2 {
-      font-size: 20px;
-      font-weight: 400;
-      margin-bottom: 20px;
-    }
-
-    .btn {
-      background: cyan;
-      color: black;
-      font-weight: bold;
-      padding: 10px 20px;
-      border-radius: 10px;
-      cursor: pointer;
-      border: none;
-    }
-
-    /* Loading popup */
-    #loading-popup {
-      display: none;
+    /* LOADING SCREEN */
+    #loadingScreen {
       position: fixed;
       top: 0; left: 0;
       width: 100%; height: 100%;
       background: rgba(0,0,0,0.9);
       display: flex;
-      align-items: center;
       justify-content: center;
-      font-size: 24px;
-      font-weight: bold;
-      color: cyan;
-      animation: glow 1s infinite alternate;
-      z-index: 999;
+      align-items: center;
+      font-size: 2rem;
+      z-index: 9999;
     }
 
-    @keyframes glow {
-      from { text-shadow: 0 0 10px cyan; }
-      to { text-shadow: 0 0 20px cyan; }
-    }
-
-    #main-content {
+    /* MAIN CONTENT HIDDEN INITIALLY */
+    #mainContent {
       display: none;
-      padding: 15px;
+      padding: 20px;
     }
 
     header {
-      font-size: 28px;
+      font-size: 2rem;
       font-weight: bold;
-      margin: 10px 0;
-      animation: fadeInOut 5s ease-in-out infinite;
+      color: #00fff7;
+      animation: slideIn 4s infinite alternate;
     }
 
-    @keyframes fadeInOut {
-      0%, 100% { opacity: 0.3; }
-      50% { opacity: 1; }
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateY(-15px); }
+      to { opacity: 1; transform: translateY(15px); }
     }
 
-    .profile-pic {
-      width: 120px;
-      height: 120px;
-      border-radius: 50%;
-      border: 3px solid cyan;
-      object-fit: cover;
-    }
-
-    .top-bar {
-      font-size: 14px;
-      margin: 10px 0;
-      color: cyan;
-    }
-
-    .typing {
-      font-size: 16px;
-      min-height: 60px;
-      margin: 10px auto;
-      width: 90%;
-      text-align: center;
-      white-space: pre-wrap;
+    .about-text {
+      border-right: 2px solid #00fff7;
+      white-space: nowrap;
       overflow: hidden;
-      border-right: 2px solid cyan;
-      animation: blink 0.8s infinite;
+      width: 0;
+      animation: typing 5s steps(60, end) forwards;
     }
 
-    @keyframes blink {
-      50% { border-color: transparent; }
+    @keyframes typing {
+      from { width: 0; }
+      to { width: 100%; }
     }
 
-    .btn-container {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 10px;
-      margin-top: 15px;
-    }
-
-    .btn-link {
-      padding: 8px 15px;
-      background: cyan;
-      border-radius: 8px;
-      text-decoration: none;
-      color: black;
-      font-weight: bold;
-    }
-
-    /* Animated star feed */
-    .feed {
-      margin: 15px auto;
-      width: 90%;
-      height: 150px;
-      background: black;
+    .buttons a {
+      display: inline-block;
+      margin: 10px;
+      padding: 12px 25px;
+      background: rgba(0,0,0,0.6);
+      border: 2px solid #00fff7;
       border-radius: 10px;
-      position: relative;
-      overflow: hidden;
+      text-decoration: none;
+      color: #00fff7;
+      font-weight: bold;
+      transition: 0.3s;
     }
 
-    .star {
-      position: absolute;
-      background: white;
-      width: 2px;
-      height: 2px;
-      border-radius: 50%;
-      animation: moveStars 10s linear infinite;
-    }
-
-    @keyframes moveStars {
-      from { transform: translateY(0); }
-      to { transform: translateY(-200px); }
+    .buttons a:hover {
+      background: #00fff7;
+      color: black;
     }
 
     footer {
-      margin-top: 15px;
-      font-size: 12px;
-      opacity: 0.7;
+      margin-top: 30px;
+      font-size: 14px;
+      opacity: 0.8;
     }
   </style>
 </head>
 <body>
 
-  <!-- Welcome Screen -->
-  <div id="welcome-screen">
-    <h1>WELCOME TO MY WEBSITE</h1>
-    <h2>ERICK ODHIAMBO</h2>
-    <button class="btn" onclick="startSite()">GET STARTED</button>
-    <footer>Powered by RoyTech ©2025</footer>
-  </div>
+  <!-- LOADING SCREEN -->
+  <div id="loadingScreen">ROYTECH LOADING...</div>
 
-  <!-- Loading Popup -->
-  <div id="loading-popup">ROYTECH LOADING...</div>
-
-  <!-- Main Content -->
-  <div id="main-content">
+  <!-- MAIN CONTENT -->
+  <div id="mainContent">
     <header>ERICK ODHIAMBO</header>
-    <img src="https://i.imgur.com/Y3jxpZk.jpeg" class="profile-pic" alt="Profile">
-    <div class="top-bar">
-      <span id="clock"></span> | <span id="battery"></span> | <span id="weather"></span>
+
+    <img src="https://i.imgur.com/Y3jxpZk.jpeg" alt="Erick Profile"
+      style="width:150px; height:150px; border-radius:50%; margin-top:15px; border:3px solid #00fff7;">
+
+    <p class="about-text">
+      Erick Odhiambo from Migori, currently studying at Egerton University,
+      pursuing a BSc in Agriculture and Human Ecology Extension. Passionate about
+      growth, technology, and connecting with new people!
+    </p>
+
+    <div class="buttons">
+      <a href="https://wa.me/254796918765" target="_blank" onclick="showLoading(event)">WhatsApp</a>
+      <a href="https://www.facebook.com/profile.php?id=61561875135557" target="_blank">Facebook</a>
+      <a href="https://vm.tiktok.com/ZMHnvemFPS9nv-UYpvn/" target="_blank">TikTok</a>
+      <a href="mailto:odhiamboerick491@gmail.com" target="_blank">Email</a>
     </div>
-
-    <div class="typing" id="typing"></div>
-
-    <div class="btn-container">
-      <a href="#" class="btn-link" onclick="showLoading(event)">WhatsApp</a>
-      <a href="https://www.facebook.com/profile.php?id=61561875135557" class="btn-link">Facebook</a>
-      <a href="https://vm.tiktok.com/ZMHnvemFPS9nv-UYpvn/" class="btn-link">TikTok</a>
-      <a href="mailto:odhiamboerick491@gmail.com" class="btn-link">Email</a>
-    </div>
-
-    <div class="feed" id="feed"></div>
 
     <footer>Powered by RoyTech ©2025</footer>
   </div>
 
   <script>
-    // Start Website with Loading
-    function startSite() {
-      document.getElementById('loading-popup').style.display = 'flex';
+    // SHOW MAIN WEBSITE AFTER 2 SECONDS
+    window.addEventListener("load", () => {
       setTimeout(() => {
-        document.getElementById('welcome-screen').style.display = 'none';
-        document.getElementById('loading-popup').style.display = 'none';
-        document.getElementById('main-content').style.display = 'block';
-        startTyping();
+        document.getElementById("loadingScreen").style.display = "none";
+        document.getElementById("mainContent").style.display = "block";
       }, 2000);
-    }
-
-    // WhatsApp Loading
-    function showLoading(e) {
-      e.preventDefault();
-      document.getElementById('loading-popup').style.display = 'flex';
-      setTimeout(() => {
-        window.open("https://wa.me/254796918765", "_blank");
-        document.getElementById('loading-popup').style.display = 'none';
-      }, 2000);
-    }
-
-    // Live Clock
-    setInterval(() => {
-      document.getElementById('clock').textContent = new Date().toLocaleTimeString();
-    }, 1000);
-
-    // Battery API
-    navigator.getBattery().then(battery => {
-      function updateBattery() {
-        document.getElementById('battery').textContent =
-          `Battery: ${(battery.level * 100).toFixed(0)}%`;
-      }
-      updateBattery();
-      battery.addEventListener('levelchange', updateBattery);
     });
 
-    // Weather API (simple)
-    fetch("https://api.open-meteo.com/v1/forecast?latitude=-0.09&longitude=34.73&current_weather=true")
-    .then(res => res.json())
-    .then(data => {
-      document.getElementById('weather').textContent = `Weather: ${data.current_weather.temperature}°C`;
-    });
-
-    // Typing Effect
-    const text = "I'm Erick Odhiambo from Migori, currently studying at Egerton University pursuing a BSc in Agriculture and Human Ecology Extension. Passionate about technology, farming, and community development!";
-    let i = 0;
-    function startTyping() {
-      if (i < text.length) {
-        document.getElementById("typing").textContent += text.charAt(i);
-        i++;
-        setTimeout(startTyping, 40);
-      }
-    }
-
-    // Animated Stars in Feed
-    const feed = document.getElementById("feed");
-    for (let s = 0; s < 50; s++) {
-      let star = document.createElement("div");
-      star.classList.add("star");
-      star.style.left = Math.random() * 100 + "%";
-      star.style.top = Math.random() * 100 + "%";
-      star.style.animationDuration = (5 + Math.random() * 10) + "s";
-      feed.appendChild(star);
+    // SHOW ROYTECH LOADING WHEN CLICKING WHATSAPP
+    function showLoading(event) {
+      event.preventDefault();
+      const link = event.target.href;
+      document.getElementById("loadingScreen").style.display = "flex";
+      setTimeout(() => {
+        window.open(link, "_blank");
+        document.getElementById("loadingScreen").style.display = "none";
+      }, 2000);
     }
   </script>
 
 </body>
-      </html>
+  </html>
