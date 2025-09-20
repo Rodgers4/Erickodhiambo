@@ -5,169 +5,206 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Erick Odhiambo</title>
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
-    body {
-      background: url('https://i.imgur.com/m8hS4jA.jpeg') center/cover no-repeat fixed;
-      backdrop-filter: brightness(0.6);
-      color: #fff;
+    body, html {
+      margin: 0;
+      padding: 0;
+      font-family: monospace;
+      background: url('https://i.imgur.com/m8hS4jA.jpeg') no-repeat center center/cover;
+      background-attachment: fixed;
+      color: white;
       text-align: center;
     }
 
-    /* Animated Header */
-    .animated-header {
-      font-size: 2.5rem;
-      font-weight: bold;
-      color: #00f7ff;
-      text-shadow: 0 0 15px #00f7ff, 0 0 30px #00f7ff;
-      animation: slideInOut 6s infinite;
-      margin: 20px 0;
-    }
-    @keyframes slideInOut {
-      0% { opacity: 0; transform: translateY(-50px); }
-      20% { opacity: 1; transform: translateY(0); }
-      80% { opacity: 1; transform: translateY(0); }
-      100% { opacity: 0; transform: translateY(50px); }
-    }
-
-    /* Welcome Screen */
+    /* Welcome screen */
     #welcome-screen {
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      background: rgba(0, 0, 0, 0.6);
-    }
-    .welcome-text { font-size: 1.8rem; margin-bottom: 20px; }
-    .btn {
-      background: #00f7ff;
-      color: #000;
-      border: none;
-      padding: 10px 25px;
-      margin: 10px;
-      border-radius: 25px;
-      font-size: 1rem;
-      cursor: pointer;
-      box-shadow: 0 0 20px #00f7ff, 0 0 40px #00f7ff;
-      transition: 0.3s;
-    }
-    .btn:hover { transform: scale(1.05); }
-    .powered { font-size: 0.9rem; margin-top: 20px; opacity: 0.8; text-shadow: 0 0 5px cyan; }
-
-    /* Loading Popup */
-    #loading-popup {
-      display: none;
       position: fixed;
       top: 0; left: 0;
       width: 100%; height: 100%;
       background: rgba(0,0,0,0.8);
       display: flex;
-      justify-content: center;
+      flex-direction: column;
       align-items: center;
-      font-size: 1.5rem;
+      justify-content: center;
+    }
+
+    #welcome-screen h1 {
+      font-size: 30px;
+      margin-bottom: 10px;
+      font-weight: bold;
+      letter-spacing: 2px;
+    }
+
+    #welcome-screen h2 {
+      font-size: 20px;
+      font-weight: 400;
+      margin-bottom: 20px;
+    }
+
+    .btn {
+      background: cyan;
+      color: black;
+      font-weight: bold;
+      padding: 10px 20px;
+      border-radius: 10px;
+      cursor: pointer;
+      border: none;
+    }
+
+    /* Loading popup */
+    #loading-popup {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.9);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      font-weight: bold;
       color: cyan;
-      text-shadow: 0 0 10px cyan;
-      z-index: 100;
+      animation: glow 1s infinite alternate;
+      z-index: 999;
     }
 
-    /* Main Content */
-    #main-content { display: none; padding: 20px; }
-    .profile-pic { width: 120px; height: 120px; border-radius: 50%; margin: 15px auto; border: 3px solid cyan; }
-
-    .description {
-      max-width: 600px;
-      margin: auto;
-      font-size: 1rem;
-      line-height: 1.6;
-      border-left: 2px solid cyan;
-      padding-left: 10px;
-      text-align: left;
-      white-space: pre-line;
-      min-height: 120px;
+    @keyframes glow {
+      from { text-shadow: 0 0 10px cyan; }
+      to { text-shadow: 0 0 20px cyan; }
     }
 
-    /* Stories Section */
-    .stories {
-      margin-top: 30px;
-      position: relative;
+    #main-content {
+      display: none;
+      padding: 15px;
+    }
+
+    header {
+      font-size: 28px;
+      font-weight: bold;
+      margin: 10px 0;
+      animation: fadeInOut 5s ease-in-out infinite;
+    }
+
+    @keyframes fadeInOut {
+      0%, 100% { opacity: 0.3; }
+      50% { opacity: 1; }
+    }
+
+    .profile-pic {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      border: 3px solid cyan;
+      object-fit: cover;
+    }
+
+    .top-bar {
+      font-size: 14px;
+      margin: 10px 0;
+      color: cyan;
+    }
+
+    .typing {
+      font-size: 16px;
+      min-height: 60px;
+      margin: 10px auto;
+      width: 90%;
+      text-align: center;
+      white-space: pre-wrap;
+      overflow: hidden;
+      border-right: 2px solid cyan;
+      animation: blink 0.8s infinite;
+    }
+
+    @keyframes blink {
+      50% { border-color: transparent; }
+    }
+
+    .btn-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 15px;
+    }
+
+    .btn-link {
+      padding: 8px 15px;
+      background: cyan;
+      border-radius: 8px;
+      text-decoration: none;
+      color: black;
+      font-weight: bold;
+    }
+
+    /* Animated star feed */
+    .feed {
+      margin: 15px auto;
+      width: 90%;
       height: 150px;
-      background: rgba(255,255,255,0.05);
-      border-radius: 15px;
+      background: black;
+      border-radius: 10px;
+      position: relative;
       overflow: hidden;
     }
+
     .star {
       position: absolute;
       background: white;
       width: 2px;
       height: 2px;
       border-radius: 50%;
-      animation: moveStars 20s linear infinite;
-    }
-    @keyframes moveStars {
-      0% { transform: translateY(0); opacity: 1; }
-      100% { transform: translateY(-150px); opacity: 0; }
+      animation: moveStars 10s linear infinite;
     }
 
-    /* Footer */
-    footer { margin-top: 30px; padding: 15px; }
-    .socials a {
-      margin: 0 10px;
-      text-decoration: none;
-      color: cyan;
-      font-weight: bold;
-      transition: 0.3s;
+    @keyframes moveStars {
+      from { transform: translateY(0); }
+      to { transform: translateY(-200px); }
     }
-    .socials a:hover { color: white; text-shadow: 0 0 10px cyan; }
-    .info-bar {
+
+    footer {
       margin-top: 15px;
-      font-size: 0.9rem;
+      font-size: 12px;
+      opacity: 0.7;
     }
-    .battery-high { color: #00ff00; text-shadow: 0 0 5px #00ff00; }
-    .battery-medium { color: orange; text-shadow: 0 0 5px orange; }
-    .battery-low { color: red; text-shadow: 0 0 5px red; }
-    #weather-info { color: #00f7ff; text-shadow: 0 0 5px #00f7ff; }
   </style>
 </head>
 <body>
 
   <!-- Welcome Screen -->
-  <section id="welcome-screen">
-    <h1 class="animated-header">ERICK ODHIAMBO</h1>
-    <p class="welcome-text">WELCOME TO MY WEBSITE</p>
+  <div id="welcome-screen">
+    <h1>WELCOME TO MY WEBSITE</h1>
+    <h2>ERICK ODHIAMBO</h2>
     <button class="btn" onclick="startSite()">GET STARTED</button>
-    <p class="powered">Powered by RoyTech ©2025</p>
-  </section>
+    <footer>Powered by RoyTech ©2025</footer>
+  </div>
 
   <!-- Loading Popup -->
   <div id="loading-popup">ROYTECH LOADING...</div>
 
   <!-- Main Content -->
   <div id="main-content">
-    <h1 class="animated-header">ERICK ODHIAMBO</h1>
-    <img src="https://i.imgur.com/Y3jxpZk.jpeg" alt="Profile Picture" class="profile-pic">
-
-    <div class="description" id="typed-text"></div>
-
-    <div class="stories" id="stars"></div>
-
-    <!-- Info Bar (Battery & Weather) -->
-    <div class="info-bar">
-      <span id="battery-info">🔋 Battery: --%</span> | 
-      <span id="weather-info">☁️ Weather: Loading...</span>
+    <header>ERICK ODHIAMBO</header>
+    <img src="https://i.imgur.com/Y3jxpZk.jpeg" class="profile-pic" alt="Profile">
+    <div class="top-bar">
+      <span id="clock"></span> | <span id="battery"></span> | <span id="weather"></span>
     </div>
 
-    <!-- Social Buttons -->
-    <footer>
-      <div class="socials">
-        <a href="https://wa.me/254796918765" onclick="showLoading(event)">WhatsApp</a>
-        <a href="https://www.facebook.com/profile.php?id=61561875135557" target="_blank">Facebook</a>
-        <a href="https://vm.tiktok.com/ZMHnvemFPS9nv-UYpvn/" target="_blank">TikTok</a>
-        <a href="mailto:odhiamboerick491@gmail.com" target="_blank">Email</a>
-      </div>
-    </footer>
+    <div class="typing" id="typing"></div>
+
+    <div class="btn-container">
+      <a href="#" class="btn-link" onclick="showLoading(event)">WhatsApp</a>
+      <a href="https://www.facebook.com/profile.php?id=61561875135557" class="btn-link">Facebook</a>
+      <a href="https://vm.tiktok.com/ZMHnvemFPS9nv-UYpvn/" class="btn-link">TikTok</a>
+      <a href="mailto:odhiamboerick491@gmail.com" class="btn-link">Email</a>
+    </div>
+
+    <div class="feed" id="feed"></div>
+
+    <footer>Powered by RoyTech ©2025</footer>
   </div>
 
   <script>
+    // Start Website with Loading
     function startSite() {
       document.getElementById('loading-popup').style.display = 'flex';
       setTimeout(() => {
@@ -178,6 +215,7 @@
       }, 2000);
     }
 
+    // WhatsApp Loading
     function showLoading(e) {
       e.preventDefault();
       document.getElementById('loading-popup').style.display = 'flex';
@@ -187,54 +225,50 @@
       }, 2000);
     }
 
-    // Typing Animation
-    const text = `From Migori, proud student at Egerton University, pursuing a degree in BSc Agriculture and Human Ecology Extension.
-Passionate about sustainable agriculture, human development, and technology.
-Focused on improving farming methods, helping communities grow, and innovating solutions for a better tomorrow.`;
-    let i = 0;
-    function startTyping() {
-      const el = document.getElementById("typed-text");
-      if (i < text.length) {
-        el.textContent += text.charAt(i);
-        i++;
-        setTimeout(startTyping, 30);
-      }
-    }
+    // Live Clock
+    setInterval(() => {
+      document.getElementById('clock').textContent = new Date().toLocaleTimeString();
+    }, 1000);
 
-    // Battery Info with Color
-    navigator.getBattery && navigator.getBattery().then(battery => {
+    // Battery API
+    navigator.getBattery().then(battery => {
       function updateBattery() {
-        const level = (battery.level * 100).toFixed(0);
-        const el = document.getElementById("battery-info");
-        el.textContent = `🔋 Battery: ${level}%`;
-        el.className = level >= 70 ? "battery-high" : level >= 30 ? "battery-medium" : "battery-low";
+        document.getElementById('battery').textContent =
+          `Battery: ${(battery.level * 100).toFixed(0)}%`;
       }
       updateBattery();
-      battery.addEventListener("levelchange", updateBattery);
+      battery.addEventListener('levelchange', updateBattery);
     });
 
-    // Weather Info
-    async function fetchWeather() {
-      try {
-        const res = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=-0.1&longitude=34.75&current_weather=true`);
-        const data = await res.json();
-        document.getElementById("weather-info").textContent = `☁️ Weather: ${data.current_weather.temperature}°C`;
-      } catch {
-        document.getElementById("weather-info").textContent = "☁️ Weather: N/A";
+    // Weather API (simple)
+    fetch("https://api.open-meteo.com/v1/forecast?latitude=-0.09&longitude=34.73&current_weather=true")
+    .then(res => res.json())
+    .then(data => {
+      document.getElementById('weather').textContent = `Weather: ${data.current_weather.temperature}°C`;
+    });
+
+    // Typing Effect
+    const text = "I'm Erick Odhiambo from Migori, currently studying at Egerton University pursuing a BSc in Agriculture and Human Ecology Extension. Passionate about technology, farming, and community development!";
+    let i = 0;
+    function startTyping() {
+      if (i < text.length) {
+        document.getElementById("typing").textContent += text.charAt(i);
+        i++;
+        setTimeout(startTyping, 40);
       }
     }
-    fetchWeather();
 
-    // Create stars
-    const starsContainer = document.getElementById("stars");
-    for (let i = 0; i < 50; i++) {
-      const star = document.createElement("div");
+    // Animated Stars in Feed
+    const feed = document.getElementById("feed");
+    for (let s = 0; s < 50; s++) {
+      let star = document.createElement("div");
       star.classList.add("star");
-      star.style.top = Math.random() * 150 + "px";
       star.style.left = Math.random() * 100 + "%";
-      star.style.animationDelay = Math.random() * 5 + "s";
-      starsContainer.appendChild(star);
+      star.style.top = Math.random() * 100 + "%";
+      star.style.animationDuration = (5 + Math.random() * 10) + "s";
+      feed.appendChild(star);
     }
   </script>
+
 </body>
-        </html>
+      </html>
