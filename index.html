@@ -5,241 +5,236 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Erick Odhiambo</title>
   <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
     body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: linear-gradient(135deg, #0a0f0d, #1a1f1d);
-      color: white;
+      background: url('https://i.imgur.com/m8hS4jA.jpeg') center/cover no-repeat fixed;
+      backdrop-filter: brightness(0.6);
+      color: #fff;
       text-align: center;
+    }
+
+    /* Animated Header */
+    .animated-header {
+      font-size: 2.5rem;
+      font-weight: bold;
+      color: #00f7ff;
+      text-shadow: 0 0 15px #00f7ff, 0 0 30px #00f7ff;
+      animation: slideInOut 6s infinite;
+      margin: 20px 0;
+    }
+    @keyframes slideInOut {
+      0% { opacity: 0; transform: translateY(-50px); }
+      20% { opacity: 1; transform: translateY(0); }
+      80% { opacity: 1; transform: translateY(0); }
+      100% { opacity: 0; transform: translateY(50px); }
+    }
+
+    /* Welcome Screen */
+    #welcome-screen {
+      height: 100vh;
       display: flex;
       flex-direction: column;
-      align-items: center;
-      min-height: 100vh;
-      overflow-x: hidden;
-    }
-
-    header {
-      margin-top: 20px;
-      font-size: 28px;
-      font-weight: bold;
-      animation: fadeInOut 4s ease-in-out infinite;
-    }
-
-    @keyframes fadeInOut {
-      0%, 100% { opacity: 0.2; }
-      50% { opacity: 1; }
-    }
-
-    .profile-pic {
-      width: 120px;
-      height: 120px;
-      border-radius: 50%;
-      object-fit: cover;
-      margin-top: 10px;
-      border: 3px solid cyan;
-    }
-
-    .clock {
-      font-size: 20px;
-      margin: 5px 0;
-      color: cyan;
-    }
-
-    .section {
-      width: 90%;
-      max-width: 700px;
-      background: rgba(0, 0, 0, 0.5);
-      margin: 10px 0;
-      padding: 15px;
-      border-radius: 15px;
-      box-shadow: 0px 0px 10px rgba(0,255,255,0.3);
-      position: relative;
-      z-index: 1;
-    }
-
-    .btn-container {
-      margin: 10px 0;
-      display: flex;
-      flex-wrap: wrap;
       justify-content: center;
-      gap: 8px;
+      align-items: center;
+      background: rgba(0, 0, 0, 0.6);
     }
-
+    .welcome-text { font-size: 1.8rem; margin-bottom: 20px; }
     .btn {
-      padding: 8px 14px;
-      background: cyan;
+      background: #00f7ff;
+      color: #000;
       border: none;
-      color: black;
-      font-weight: bold;
-      border-radius: 10px;
+      padding: 10px 25px;
+      margin: 10px;
+      border-radius: 25px;
+      font-size: 1rem;
       cursor: pointer;
-      text-decoration: none;
+      box-shadow: 0 0 20px #00f7ff, 0 0 40px #00f7ff;
+      transition: 0.3s;
     }
+    .btn:hover { transform: scale(1.05); }
+    .powered { font-size: 0.9rem; margin-top: 20px; opacity: 0.8; text-shadow: 0 0 5px cyan; }
 
-    .btn:hover {
-      opacity: 0.8;
-    }
-
-    .live-interface {
-      display: grid;
-      grid-template-columns: 1fr 2fr 1fr;
-      gap: 10px;
-      text-align: left;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .box {
-      background: rgba(255, 255, 255, 0.05);
-      padding: 10px;
-      border-radius: 10px;
-      min-height: 100px;
-      z-index: 2;
-      backdrop-filter: blur(3px);
-    }
-
-    footer {
-      margin-top: auto;
-      font-size: 12px;
-      padding: 10px;
-      opacity: 0.7;
-    }
-
-    /* Star Animation Background */
-    .stars {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: transparent;
-      overflow: hidden;
-      z-index: 0;
-    }
-
-    .star {
-      position: absolute;
-      width: 2px;
-      height: 2px;
-      background: white;
-      border-radius: 50%;
-      animation: moveStar 10s linear infinite;
-    }
-
-    @keyframes moveStar {
-      0% { transform: translate(0, 0) scale(1); opacity: 0.8; }
-      50% { transform: translate(40px, 20px) scale(1.2); opacity: 1; }
-      100% { transform: translate(0, 0) scale(1); opacity: 0.8; }
-    }
-
-    /* Popup styles */
-    .popup {
+    /* Loading Popup */
+    #loading-popup {
       display: none;
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.85);
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.8);
       display: flex;
-      align-items: center;
       justify-content: center;
+      align-items: center;
+      font-size: 1.5rem;
       color: cyan;
-      font-size: 22px;
-      font-weight: bold;
-      z-index: 1000;
+      text-shadow: 0 0 10px cyan;
+      z-index: 100;
     }
+
+    /* Main Content */
+    #main-content { display: none; padding: 20px; }
+    .profile-pic { width: 120px; height: 120px; border-radius: 50%; margin: 15px auto; border: 3px solid cyan; }
+
+    .description {
+      max-width: 600px;
+      margin: auto;
+      font-size: 1rem;
+      line-height: 1.6;
+      border-left: 2px solid cyan;
+      padding-left: 10px;
+      text-align: left;
+      white-space: pre-line;
+      min-height: 120px;
+    }
+
+    /* Stories Section */
+    .stories {
+      margin-top: 30px;
+      position: relative;
+      height: 150px;
+      background: rgba(255,255,255,0.05);
+      border-radius: 15px;
+      overflow: hidden;
+    }
+    .star {
+      position: absolute;
+      background: white;
+      width: 2px;
+      height: 2px;
+      border-radius: 50%;
+      animation: moveStars 20s linear infinite;
+    }
+    @keyframes moveStars {
+      0% { transform: translateY(0); opacity: 1; }
+      100% { transform: translateY(-150px); opacity: 0; }
+    }
+
+    /* Footer */
+    footer { margin-top: 30px; padding: 15px; }
+    .socials a {
+      margin: 0 10px;
+      text-decoration: none;
+      color: cyan;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+    .socials a:hover { color: white; text-shadow: 0 0 10px cyan; }
+    .info-bar {
+      margin-top: 15px;
+      font-size: 0.9rem;
+    }
+    .battery-high { color: #00ff00; text-shadow: 0 0 5px #00ff00; }
+    .battery-medium { color: orange; text-shadow: 0 0 5px orange; }
+    .battery-low { color: red; text-shadow: 0 0 5px red; }
+    #weather-info { color: #00f7ff; text-shadow: 0 0 5px #00f7ff; }
   </style>
 </head>
 <body>
-  <!-- Popup -->
-  <div class="popup" id="loadingPopup">ROYTECH LOADING...</div>
 
-  <header>ERICK ODHIAMBO</header>
-  <img src="https://i.imgur.com/Y3jxpZk.jpeg" alt="Profile" class="profile-pic">
+  <!-- Welcome Screen -->
+  <section id="welcome-screen">
+    <h1 class="animated-header">ERICK ODHIAMBO</h1>
+    <p class="welcome-text">WELCOME TO MY WEBSITE</p>
+    <button class="btn" onclick="startSite()">GET STARTED</button>
+    <p class="powered">Powered by RoyTech ©2025</p>
+  </section>
 
-  <div class="clock" id="clock"></div>
+  <!-- Loading Popup -->
+  <div id="loading-popup">ROYTECH LOADING...</div>
 
-  <div class="section">
-    <h2>About Me</h2>
-    <p>Hello, I’m Erick Odhiambo from Migori. Currently studying at Egerton University pursuing a degree in <b>BSc Agriculture and Human Ecology Extension</b>. Passionate about helping communities through sustainable farming practices and human development.</p>
-  </div>
+  <!-- Main Content -->
+  <div id="main-content">
+    <h1 class="animated-header">ERICK ODHIAMBO</h1>
+    <img src="https://i.imgur.com/Y3jxpZk.jpeg" alt="Profile Picture" class="profile-pic">
 
-  <div class="section">
-    <h2>Contact Me</h2>
-    <div class="btn-container">
-      <a href="https://wa.me/254796918765" class="btn" onclick="showPopup(event)">WhatsApp</a>
-      <a href="#" class="btn">Instagram</a>
-      <a href="#" class="btn">TikTok</a>
-      <a href="#" class="btn">Twitter (X)</a>
-      <a href="#" class="btn">Facebook</a>
-      <a href="#" class="btn">Gmail</a>
+    <div class="description" id="typed-text"></div>
+
+    <div class="stories" id="stars"></div>
+
+    <!-- Info Bar (Battery & Weather) -->
+    <div class="info-bar">
+      <span id="battery-info">🔋 Battery: --%</span> | 
+      <span id="weather-info">☁️ Weather: Loading...</span>
     </div>
-  </div>
 
-  <div class="section">
-    <h2>Live Interface</h2>
-    <!-- Animated stars -->
-    <div class="stars" id="stars"></div>
-    <div class="live-interface">
-      <div class="box">
-        <h4>Stories</h4>
-        <p>🌱 Sustainable Farming Tips</p>
-        <p>🎓 University Moments</p>
-        <p>🌍 Community Projects</p>
+    <!-- Social Buttons -->
+    <footer>
+      <div class="socials">
+        <a href="https://wa.me/254796918765" onclick="showLoading(event)">WhatsApp</a>
+        <a href="https://www.facebook.com/profile.php?id=61561875135557" target="_blank">Facebook</a>
+        <a href="https://vm.tiktok.com/ZMHnvemFPS9nv-UYpvn/" target="_blank">TikTok</a>
+        <a href="mailto:odhiamboerick491@gmail.com" target="_blank">Email</a>
       </div>
-      <div class="box">
-        <h4>Feed</h4>
-        <p>📢 Just completed a project on soil fertility improvement in Migori.</p>
-        <p>💡 Sharing knowledge on human ecology with fellow students.</p>
-      </div>
-      <div class="box">
-        <h4>Suggestions</h4>
-        <p>🔗 Network with fellow agriculturists</p>
-        <p>📖 Explore human ecology research papers</p>
-      </div>
-    </div>
+    </footer>
   </div>
-
-  <footer>POWERED BY ROYTECH ©2025</footer>
 
   <script>
-    // Clock
-    function updateClock() {
-      const now = new Date();
-      document.getElementById("clock").textContent = now.toLocaleTimeString();
-    }
-    setInterval(updateClock, 1000);
-    updateClock();
-
-    // Loading popup on page load
-    window.onload = function() {
-      const popup = document.getElementById("loadingPopup");
-      popup.style.display = "flex";
-      setTimeout(() => popup.style.display = "none", 2000);
-    };
-
-    // Show popup before opening WhatsApp
-    function showPopup(event) {
-      event.preventDefault();
-      const popup = document.getElementById("loadingPopup");
-      popup.style.display = "flex";
+    function startSite() {
+      document.getElementById('loading-popup').style.display = 'flex';
       setTimeout(() => {
-        popup.style.display = "none";
-        window.open("https://wa.me/254796918765", "_blank");
+        document.getElementById('welcome-screen').style.display = 'none';
+        document.getElementById('loading-popup').style.display = 'none';
+        document.getElementById('main-content').style.display = 'block';
+        startTyping();
       }, 2000);
     }
 
-    // Generate stars
-    const starsContainer = document.getElementById('stars');
-    for (let i = 0; i < 30; i++) {
-      const star = document.createElement('div');
-      star.className = 'star';
-      star.style.top = Math.random() * 100 + '%';
-      star.style.left = Math.random() * 100 + '%';
-      star.style.animationDelay = (Math.random() * 5) + 's';
+    function showLoading(e) {
+      e.preventDefault();
+      document.getElementById('loading-popup').style.display = 'flex';
+      setTimeout(() => {
+        window.open("https://wa.me/254796918765", "_blank");
+        document.getElementById('loading-popup').style.display = 'none';
+      }, 2000);
+    }
+
+    // Typing Animation
+    const text = `From Migori, proud student at Egerton University, pursuing a degree in BSc Agriculture and Human Ecology Extension.
+Passionate about sustainable agriculture, human development, and technology.
+Focused on improving farming methods, helping communities grow, and innovating solutions for a better tomorrow.`;
+    let i = 0;
+    function startTyping() {
+      const el = document.getElementById("typed-text");
+      if (i < text.length) {
+        el.textContent += text.charAt(i);
+        i++;
+        setTimeout(startTyping, 30);
+      }
+    }
+
+    // Battery Info with Color
+    navigator.getBattery && navigator.getBattery().then(battery => {
+      function updateBattery() {
+        const level = (battery.level * 100).toFixed(0);
+        const el = document.getElementById("battery-info");
+        el.textContent = `🔋 Battery: ${level}%`;
+        el.className = level >= 70 ? "battery-high" : level >= 30 ? "battery-medium" : "battery-low";
+      }
+      updateBattery();
+      battery.addEventListener("levelchange", updateBattery);
+    });
+
+    // Weather Info
+    async function fetchWeather() {
+      try {
+        const res = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=-0.1&longitude=34.75&current_weather=true`);
+        const data = await res.json();
+        document.getElementById("weather-info").textContent = `☁️ Weather: ${data.current_weather.temperature}°C`;
+      } catch {
+        document.getElementById("weather-info").textContent = "☁️ Weather: N/A";
+      }
+    }
+    fetchWeather();
+
+    // Create stars
+    const starsContainer = document.getElementById("stars");
+    for (let i = 0; i < 50; i++) {
+      const star = document.createElement("div");
+      star.classList.add("star");
+      star.style.top = Math.random() * 150 + "px";
+      star.style.left = Math.random() * 100 + "%";
+      star.style.animationDelay = Math.random() * 5 + "s";
       starsContainer.appendChild(star);
     }
   </script>
 </body>
-</html>
+        </html>
