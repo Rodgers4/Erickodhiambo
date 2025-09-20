@@ -9,10 +9,21 @@
       margin: 0;
       padding: 0;
       font-family: "Orbitron", sans-serif;
-      background: url('https://i.imgur.com/m8hS4jA.jpeg') no-repeat center center/cover;
+      background: linear-gradient(135deg, #0a0a0a, #1a1a1a);
       color: white;
       text-align: center;
       height: 100%;
+      overflow-x: hidden;
+    }
+
+    /* STAR BACKGROUND CANVAS */
+    #stars {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
     }
 
     /* LOADING SCREEN */
@@ -31,37 +42,52 @@
     /* MAIN CONTENT HIDDEN INITIALLY */
     #mainContent {
       display: none;
-      padding: 20px;
+      opacity: 0;
+      animation: fadeIn 1s forwards;
     }
 
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    /* HEADER ANIMATION (LETTERS FLY IN) */
     header {
-      font-size: 2rem;
+      font-size: 2.5rem;
       font-weight: bold;
       color: #00fff7;
-      animation: slideIn 4s infinite alternate;
+      display: inline-block;
+      margin-top: 20px;
     }
 
-    @keyframes slideIn {
-      from { opacity: 0; transform: translateY(-15px); }
-      to { opacity: 1; transform: translateY(15px); }
+    header span {
+      display: inline-block;
+      opacity: 0;
+      transform: translate(var(--x, 0), var(--y, 0));
+      animation: flyIn 0.8s forwards;
     }
 
+    @keyframes flyIn {
+      to {
+        opacity: 1;
+        transform: translate(0, 0);
+      }
+    }
+
+    /* ABOUT TEXT TYPING */
     .about-text {
       border-right: 2px solid #00fff7;
       white-space: nowrap;
       overflow: hidden;
-      width: 0;
-      animation: typing 5s steps(60, end) forwards;
+      margin-top: 10px;
+      font-size: 1rem;
+      display: inline-block;
     }
 
-    @keyframes typing {
-      from { width: 0; }
-      to { width: 100%; }
-    }
-
+    /* BUTTON STYLING */
     .buttons a {
       display: inline-block;
-      margin: 10px;
+      margin: 12px;
       padding: 12px 25px;
       background: rgba(0,0,0,0.6);
       border: 2px solid #00fff7;
@@ -69,38 +95,58 @@
       text-decoration: none;
       color: #00fff7;
       font-weight: bold;
-      transition: 0.3s;
+      box-shadow: 0 0 10px #00fff7;
+      transition: 0.3s ease-in-out;
     }
 
     .buttons a:hover {
       background: #00fff7;
       color: black;
+      box-shadow: 0 0 20px #00fff7, 0 0 40px #00fff7;
     }
 
     footer {
-      margin-top: 30px;
+      position: fixed;
+      bottom: 5px;
+      width: 100%;
+      text-align: center;
       font-size: 14px;
+      opacity: 0.7;
+    }
+
+    /* TOP BAR FOR CLOCK & BATTERY */
+    .top-bar {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      font-size: 0.9rem;
+      text-align: right;
       opacity: 0.8;
     }
   </style>
 </head>
 <body>
 
+  <!-- STAR BACKGROUND -->
+  <canvas id="stars"></canvas>
+
   <!-- LOADING SCREEN -->
   <div id="loadingScreen">ROYTECH LOADING...</div>
 
   <!-- MAIN CONTENT -->
   <div id="mainContent">
-    <header>ERICK ODHIAMBO</header>
+    <div class="top-bar">
+      <div id="clock"></div>
+      <div id="battery"></div>
+      <div id="weather"></div>
+    </div>
+
+    <header id="header"></header>
 
     <img src="https://i.imgur.com/Y3jxpZk.jpeg" alt="Erick Profile"
       style="width:150px; height:150px; border-radius:50%; margin-top:15px; border:3px solid #00fff7;">
 
-    <p class="about-text">
-      Erick Odhiambo from Migori, currently studying at Egerton University,
-      pursuing a BSc in Agriculture and Human Ecology Extension. Passionate about
-      growth, technology, and connecting with new people!
-    </p>
+    <p class="about-text" id="about"></p>
 
     <div class="buttons">
       <a href="https://wa.me/254796918765" target="_blank" onclick="showLoading(event)">WhatsApp</a>
@@ -113,13 +159,68 @@
   </div>
 
   <script>
-    // SHOW MAIN WEBSITE AFTER 2 SECONDS
+    // LOADING THEN SHOW MAIN CONTENT
     window.addEventListener("load", () => {
       setTimeout(() => {
         document.getElementById("loadingScreen").style.display = "none";
         document.getElementById("mainContent").style.display = "block";
       }, 2000);
     });
+
+    // HEADER LETTER ANIMATION
+    const header = document.getElementById("header");
+    const text = "ERICK ODHIAMBO";
+    text.split("").forEach((letter, i) => {
+      const span = document.createElement("span");
+      span.textContent = letter;
+      span.style.setProperty("--x", `${Math.random() * 200 - 100}px`);
+      span.style.setProperty("--y", `${Math.random() * 100 - 50}px`);
+      span.style.animationDelay = `${i * 0.1}s`;
+      header.appendChild(span);
+    });
+
+    // ABOUT TEXT TYPING EFFECT
+    const aboutText = `Erick Odhiambo from Migori. Currently studying at Egerton University,
+    pursuing a BSc in Agriculture and Human Ecology Extension. Passionate about technology,
+    farming innovation, and making a positive impact in society. Loves connecting with people
+    and exploring new opportunities for growth.`;
+    let i = 0;
+    function typeAbout() {
+      if (i < aboutText.length) {
+        document.getElementById("about").textContent += aboutText.charAt(i);
+        i++;
+        setTimeout(typeAbout, 40);
+      }
+    }
+    setTimeout(typeAbout, 2500);
+
+    // CLOCK
+    function updateClock() {
+      const now = new Date();
+      document.getElementById("clock").textContent = now.toLocaleString();
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    // BATTERY STATUS
+    navigator.getBattery().then(battery => {
+      function updateBattery() {
+        document.getElementById("battery").textContent = `Battery: ${(battery.level * 100).toFixed(0)}%`;
+      }
+      updateBattery();
+      battery.addEventListener("levelchange", updateBattery);
+    });
+
+    // WEATHER USING IP API
+    fetch("https://api.weatherapi.com/v1/current.json?key=9bffdde3b7cb4e6fbba193114252309&q=auto:ip")
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById("weather").textContent =
+          `Weather: ${data.current.temp_c}°C, ${data.current.condition.text}`;
+      })
+      .catch(() => {
+        document.getElementById("weather").textContent = "Weather: Unavailable";
+      });
 
     // SHOW ROYTECH LOADING WHEN CLICKING WHATSAPP
     function showLoading(event) {
@@ -131,6 +232,50 @@
         document.getElementById("loadingScreen").style.display = "none";
       }, 2000);
     }
+
+    // STAR BACKGROUND ANIMATION
+    const canvas = document.getElementById("stars");
+    const ctx = canvas.getContext("2d");
+    let stars = [];
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+
+    function createStars() {
+      stars = [];
+      for (let i = 0; i < 100; i++) {
+        stars.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          radius: Math.random() * 1.5,
+          speed: Math.random() * 0.3
+        });
+      }
+    }
+
+    function drawStars() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = "white";
+      stars.forEach(star => {
+        ctx.beginPath();
+        ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+        ctx.fill();
+        star.y += star.speed;
+        if (star.y > canvas.height) star.y = 0;
+      });
+      requestAnimationFrame(drawStars);
+    }
+
+    resizeCanvas();
+    createStars();
+    drawStars();
+
+    window.addEventListener("resize", () => {
+      resizeCanvas();
+      createStars();
+    });
   </script>
 
 </body>
